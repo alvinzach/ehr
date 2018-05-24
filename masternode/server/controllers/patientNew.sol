@@ -1,14 +1,11 @@
 pragma solidity  ^0.4.11;
 contract Master{
-address masterAccount;
-function Master(){
-    masterAccount=msg.sender;
-}
+
 modifier onlyOwner {
     require(msg.sender == masterAccount);
     _;
 }
-mapping (address=>address) public patients ;
+mapping (address=>address) private  patients ;
 
 function addRecord(address _patient,address _contract) onlyOwner returns(address){
     patients[_patient]=_contract;
