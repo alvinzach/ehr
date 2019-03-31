@@ -2,9 +2,9 @@ const fs = require('fs');
 const solc = require('solc');
 const Web3 = require('web3');
 
-const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
 
-const input = fs.readFileSync('master.sol');
+const input = fs.readFileSync(__dirname+'/master.sol');
 const output = solc.compile(input.toString(), 1);
 const bytecode = output.contracts[':Master'].bytecode;
 const abi = JSON.parse(output.contracts[':Master'].interface);
@@ -21,7 +21,7 @@ const contractInstance = contract.new({
         return;
     }
 
-    console.log(res.transactionHash);
+    console.log("transaction hash : "+res.transactionHash);
 
     var intId=setInterval(()=>{
         if(contractInstance.address!==undefined){

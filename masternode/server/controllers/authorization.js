@@ -2,13 +2,11 @@
 var solc=require('solc')
 var fs=require('fs')
 const Web3 = require('web3');
-const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+const settings=require('../../settings.json')
+const web3 = new Web3(new Web3.providers.HttpProvider(settings.rpc));
 module.exports.register=(req,res)=>{
-    console.log('hello world')
-    var owner='hello'
     console.log(req.body.password+'\n\n');
     var userAddress=web3.personal.newAccount(req.body.password)
-    console.log("new user address",userAddress)
     const input = fs.readFileSync(__dirname+'/patient.sol');
     var output = solc.compile(input.toString(), 1)
     console.log(output)
@@ -16,7 +14,7 @@ module.exports.register=(req,res)=>{
     var abi=output.contracts[':patient'].interface
     var patientContract=web3.eth.contract(JSON.parse(abi))
     console.log(abi)
-    web3.personal.unlockAccount(web3.eth.accounts[0],"kattanam",10000);
+    //web3.personal.unlockAccount(web3.eth.accounts[0],password,10000);
     web3.eth.sendTransaction({
         from:web3.eth.accounts[0],
         to:userAddress,

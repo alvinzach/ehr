@@ -8,5 +8,5 @@ var authorizationController=require('./server/controllers/authorization')
 
 app.post('/api/patient/register',authorizationController.register)
 app.listen(6000,()=>{
-    console.log('server listening at 3010')
+    console.log('server listening at 6000')
 })
